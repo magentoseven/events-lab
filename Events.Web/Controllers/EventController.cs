@@ -10,7 +10,12 @@ namespace Events.Web.Controllers
     [Authorize]
     public class EventController : BaseController
     {
-        EventRepository eventRepo = new EventRepository();
+        private IEventRepository eventRepository;
+
+        public EventController(IEventRepository eventRepository)
+        {
+            this.eventRepository = eventRepository;
+        }
 
         public ActionResult Index()
         {
@@ -20,13 +25,13 @@ namespace Events.Web.Controllers
         [AllowAnonymous]
         public PartialViewResult _PublicEvents()
         {
-            var publicEvents = eventRepo.GetUpcomingPassendEvents(null);
+            var publicEvents = eventRepository.GetUpcomingPassendEvents(null);
             return PartialView("_UpcomingPassedEvents", publicEvents);
         }
 
         public ActionResult My()
         {
-            var myEvents = eventRepo.GetUpcomingPassendEvents(UserId);
+            var myEvents = eventRepository.GetUpcomingPassendEvents(UserId);
             ViewBag.UserId = UserId.ToString();
             return View(myEvents);
         }
@@ -34,7 +39,7 @@ namespace Events.Web.Controllers
         [AllowAnonymous]
         public ActionResult Details(int id)
         {
-            var eventDetails = eventRepo.GetEventDetails(id);
+            var eventDetails = eventRepository.GetEventDetails(id);
             ViewBag.CanEdit = (IsAdmin || eventDetails.AuthorId == UserId) && (UserId != null);
             return View(eventDetails);
         }
@@ -58,8 +63,8 @@ namespace Events.Web.Controllers
                     AuthorId = UserId
                 };
                 eventViewModel.ToModel(newEvent);
-                eventRepo.Insert(newEvent);
-                eventRepo.Save();
+                eventRepository.Insert(newEvent);
+                eventRepository.Save();
 
                 this.AddNotification("Event created.", NotificationType.SUCCESS);
                 return RedirectToAction("Details", new RouteValueDictionary(
@@ -74,7 +79,7 @@ namespace Events.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id = 0)
         {
-            var eventToEdit = eventRepo.GetById(id);
+            var eventToEdit = eventRepository.GetById(id);
             if (eventToEdit == null)
             {
                 this.AddNotification(string.Format("Cannot edit event #{0}", id), NotificationType.ERROR);
@@ -93,7 +98,7 @@ namespace Events.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EventEditorFormViewModel eventViewModel)
         {
-            var eventToEdit = eventRepo.GetById(id);
+            var eventToEdit = eventRepository.GetById(id);
             if (eventToEdit == null)
             {
                 this.AddNotification(string.Format("Cannot edit event #{0}", id), NotificationType.ERROR);
@@ -103,8 +108,8 @@ namespace Events.Web.Controllers
             if (eventViewModel != null && ModelState.IsValid)
             {
                 eventViewModel.ToModel(eventToEdit);
-                eventRepo.Update(eventToEdit);
-                eventRepo.Save();
+                eventRepository.Update(eventToEdit);
+                eventRepository.Save();
 
                 this.AddNotification("Event edited.", NotificationType.INFO);
                 return RedirectToAction("Details", new RouteValueDictionary(
@@ -119,7 +124,7 @@ namespace Events.Web.Controllers
         [HttpGet]
         public ActionResult DeleteModal(int id)
         {
-            var eventToDelete = eventRepo.GetById(id);
+            var eventToDelete = eventRepository.GetById(id);
             if (eventToDelete == null)
             {
                 return Content("");
@@ -140,15 +145,15 @@ namespace Events.Web.Controllers
         public ActionResult Delete(ModalViewModel viewModel)
         {
             var id = viewModel.Id;
-            var eventToDelete = eventRepo.GetById(id);
+            var eventToDelete = eventRepository.GetById(id);
             if (eventToDelete == null)
             {
                 this.AddNotification(string.Format("Cannot delete event #{0}", id), NotificationType.ERROR);
                 return RedirectToAction("My");
             }
 
-            eventRepo.Delete(id);
-            eventRepo.Save();
+            eventRepository.Delete(id);
+            eventRepository.Save();
             this.AddNotification("Event deleted.", NotificationType.INFO);
             return RedirectToAction("My");
         }

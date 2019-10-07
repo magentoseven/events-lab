@@ -6,12 +6,17 @@ namespace Events.Web.Controllers
 {
     public class CommentController : BaseController
     {
-        CommentRepository commentRepo = new CommentRepository();
+        private ICommentRepository commentRepository;
+
+        public CommentController(ICommentRepository commentRepository)
+        {
+            this.commentRepository = commentRepository;
+        }
 
         // GET: Comments
         public PartialViewResult _GetForEvent(int eventId)
         {
-            var comments = commentRepo.GetForEvent(eventId);
+            var comments = commentRepository.GetForEvent(eventId);
 
             ViewBag.EventId = eventId;
             return PartialView("_GetForEvent", comments);
@@ -34,11 +39,11 @@ namespace Events.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                commentRepo.Insert(comment);
-                commentRepo.Save();
+                commentRepository.Insert(comment);
+                commentRepository.Save();
             }
 
-            var comments = commentRepo.GetForEvent(comment.EventId);
+            var comments = commentRepository.GetForEvent(comment.EventId);
 
             ViewBag.EventId = comment.EventId;
             return PartialView("_GetForEvent", comments);

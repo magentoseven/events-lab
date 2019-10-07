@@ -1,0 +1,46 @@
+﻿@model Events.Web.Models.EventViewModel
+@using Microsoft.AspNet.Identity;
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="event-box">
+        @*<div class="event-image" style="background: url('https://m.media-amazon.com/images/I/919nudzmvHL._SS500_.jpg')"></div>*@
+        <div class="event-content">
+            @* Event titl e*@
+            <div class="event-title"><h3>@Model.Title</h3></div>
+            @* Event description *@
+            <div class="event-description">@Model.Description</div>
+            @* Event Date time *@
+            <div class="event-date"><i class="far fa-calendar-alt"></i><span>23 Sept 2019 (4 hours)</span></div>
+            @* Event Location *@
+            <div class="event-date"><i class="fas fa-map-marker-alt"></i><span>Laguna Beach</span></div>
+            @* Event Author *@
+            @if (Model.Author != null)
+            {
+                <div class="event-date"><i class="fas fa-user-alt"></i><span>@Model.Author</span></div>
+            }
+            @* Event details *@
+            <div id="event-details-@Model.Id"></div>
+            @* Comments *@
+            <div id="event-comments-@Model.Id">
+                @Html.Action("_GetForEvent", "Comment", new { eventId = Model.Id })
+            </div>
+            @* Comment form *@
+            <div id="event-comment-form-@Model.Id" style="display:none">
+                @Html.Action("_EditorForm", "Comment", new { eventId = Model.Id })
+            </div>
+            @* Action buttons *@
+            <div id="event-action-@Model.Id" class="event-action">
+                <a class="btn btn-link" href="javascript:ShowCommentForm(@Model.Id)">Add comment</a>
+                @Html.ActionLink("View details", "Details", "Event", new { eventId = Model.Id }, new { @class = "btn-link" } )
+                <a class="btn btn-link" href="javascript:ShowCommentForm(@Model.Id)">Add comment</a>
+                @if ((ViewData["UserRole"]?.ToString() == "Administrator") || ((Model.AuthorId != null) && (Model.AuthorId == User.Identity.GetUserId())))
+                {
+                    <div class="event-edit">
+                        @Html.ActionLink("Edit", "Edit", "Events", new { id = Model.Id }, new { @class = "btn text-white btn-primary btn-sm" })
+                        <a id="EventDelete-@Model.Id" class="btn text-white btn-danger btn-sm">Delete</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

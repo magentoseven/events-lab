@@ -1,0 +1,17 @@
+﻿@model Events.Web.Models.CommentViewModel
+@using Events.Web.Models
+
+<div class="container comment-container">
+    <div class="row comment-author">
+        @if (Model.Author != null)
+        {
+            @: @Model.Author:
+        }
+        else
+        {
+            @: Anonymous:
+        }
+        &nbsp;&nbsp;&nbsp;<span class="comment-time">( @CommentViewModel.TimeDisplay(Model.CommentTime) )</span>
+    </div>
+    <div class="row comment-text">@Model.Text</div>
+</div>

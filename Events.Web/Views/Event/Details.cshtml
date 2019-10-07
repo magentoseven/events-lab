@@ -1,0 +1,71 @@
+﻿@model Events.Web.Models.EventDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container event-container">
+    <div class="container">
+        <div class="row">
+            <div class="event-title"><h3>@Model.Title</h3></div>
+        </div>
+        <div class="row event-info">
+            <i class="far fa-calendar-alt"></i><span>@Html.DisplayFor(e => e.StartDateTime)</span>
+        </div>
+        <div class="row event-info">
+            <i class="fas fa-map-marker-alt"></i><span>@Model.Location</span>
+        </div>
+        <div class="row event-info">
+            <i class="fas fa-user"></i><span>@Model.Author</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row event-info">
+            <i class="fas fa-info-circle"></i><span>Description:</span>
+        </div>
+        <div class="row">
+            <p>@Model.Description</p>
+        </div>
+    </div>
+    @if (ViewBag.CanEdit)
+    {
+        <div class="container">
+            <div class="row">
+                @Html.ActionLink("Edit", "Edit", "Event", new { id = Model.Id }, new { @class = "btn btn-sm btn-primary" })
+                <span>&nbsp;</span>
+                <a class="btn btn-sm btn-danger" href="javascript:EventDeleteModal(@Model.Id)">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+<div class="container event-container">
+    <div class="container">
+        <div class="row event-info">
+            <i class="fas fa-comment-alt"></i><span>Comments:</span>
+        </div>
+        <div class="row" id="event-comments">
+            @Html.Action("_GetForEvent", "Comment", new { eventId = Model.Id })
+        </div>
+    </div>
+    @Html.Action("_EditorForm", "Comment", new { eventId = Model.Id })
+</div>
+
+@section scripts {
+    <script>
+        function EventDeleteModal(id) {
+            $.ajax({
+                url: "/Event/DeleteModal/@Model.Id", success: function (result) {
+                    $("#modal-content").html(result);
+                    $("#app-modal").modal("show");
+                }
+            });
+        }
+        $(function () {
+            var commentHub = $.connection.commentHub;
+
+            commentHub.client.addNewComment = function (text) {
+                $("#event-comments").append("<p>" + text + "</p>");
+            };
+        })
+    </script>
+}

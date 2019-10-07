@@ -1,0 +1,217 @@
+﻿body {
+    padding: 0;
+    background-color: rgb(236, 244, 251);
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-top: 85px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default 
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+*/
+
+input[type=text], textarea {
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* <<<<< Bootstrap Override >>>>> */
+.btn-primary {
+    color: #fff;
+    background-color: rgb(83, 140, 211);
+    border-color: rgb(83, 140, 211);
+}
+
+.btn-link {
+    font-weight: 400;
+    color: rgb(83, 140, 211);
+    text-decoration: none;
+}
+
+    .btn-link:hover {
+        color: rgb(90, 156, 238);
+        text-decoration: none;
+    }
+
+input .input-sm {
+    max-width: 100px;
+}
+
+.form-datetimepicker {
+    max-width: 170px;
+}
+
+.wordwrap {
+    white-space: pre-wrap; /* CSS3 */
+    word-wrap: break-word; /* IE */
+}
+
+/* <<<<< End of Bootstrap Override */
+
+.page-header {
+    color: rgb(131, 143, 159);
+    margin-bottom: 20px;
+}
+
+
+/* <<<<< Event >>>>> */
+.event-container {
+    color: rgb(116, 127, 141);
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.event-title {
+    color: rgb(83, 140, 211);
+    width: 100%;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.event-info {
+    color: rgb(116, 127, 141);
+    height: 30px;
+}
+
+    .event-info i {
+        width: 30px;
+        margin-top: 4px;
+    }
+
+.event-action {
+    padding: 0 0 0 20px;
+    height: 30px;
+}
+
+.event-action a {
+    font-size: smaller;
+}
+
+/* <<<<< Comment >>>>> */
+.comment-container {
+    padding: 10px 20px 10px 20px;
+    margin: 0 0 10px 0;
+}
+
+.comment-author {
+    font-size: smaller;
+    color: rgb(83, 140, 211);
+    margin-bottom: 5px;
+}
+
+.comment-text {
+    color: rgb(116, 127, 141);
+}
+
+.comment-time {
+    color: rgb(116, 127, 141);
+}
+
+.my-bg-primary {
+    background-color: rgb(83, 140, 211);
+}
+
+.my-bg-active {
+    color: rgb(155, 168, 185);
+    background-color: rgb(241, 246, 253);
+}
+
+.my-text-dark {
+    color: rgb(155, 168, 185);
+}
+
+/* Link */
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+/*
+.event-group-heading-upcoming {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.event-group-heading-passed {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+*/
+
+
+    .event-box .event-edit {
+        display:inline-block;
+        opacity: 0;
+    }
+
+    .event-box:hover .event-edit {
+        opacity: 1;
+    }
+
+.event-box-blank {
+    color: lightslategrey;
+    width: 100%;
+    margin: 5px 10px 20px 10px;
+    padding: 10px 10px 0 10px;
+}
+
+.event-image {
+    width: 100%;
+    min-height: 200px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+
+
+.event-description {
+    color: black;
+}
+
+.event-location {
+    font-size: medium;
+}
+
+.event-location span {
+    margin-left: 5px;
+}
+
+.event-comment {
+    color: #707070;
+    font-size: smaller;
+}
+
+    .event-comment span {
+        margin-left: 5px;
+    }
+
+.alert {
+    margin-top: 10px;
+}
+
+.control-checkbox {
+    margin-left: 0 !important;
+}

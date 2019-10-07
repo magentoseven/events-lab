@@ -1,0 +1,39 @@
+﻿@model Events.Web.Models.UpcomingPassedEventsViewModel
+
+<div class="container page-header">
+    <h3>Upcoming Events</h3>
+</div>
+<div class="container">
+    <div class="row">
+        @if (Model.UpcomingEvents.Any())
+        {
+            foreach (var @event in Model.UpcomingEvents)
+            {
+                @Html.Partial("_Event", @event)
+            }
+        }
+        else
+        {
+            <div class="col-md-4 col-sm-6 col-12"><div class="event-box-blank">No events</div></div>
+        }
+    </div>
+</div>
+
+<div class="container page-header">
+    <h3>Passed Events</h3>
+</div>
+<div class="container">
+    <div class="row">
+        @if (Model.PassedEvents.Any())
+        {
+            foreach (var @event in Model.PassedEvents)
+            {
+                @Html.Partial("_Event", @event)
+            }
+        }
+        else
+        {
+            <div class="col-md-4 col-sm-6 col-12"><div class="event-box-blank">No events</div></div>
+        }
+    </div>
+</div>

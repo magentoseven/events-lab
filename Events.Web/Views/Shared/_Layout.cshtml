@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@@EVENTZ - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+    @Styles.Render("~/Content/chatbox")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://kit.fontawesome.com/7792e7562f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container body-content">
+        @Html.Partial("_Notifications")
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Events Application</p>
+        </footer>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="app-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div id="modal-content" class="modal-content">
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Window -->
+    @Html.Partial("_ChatWindow")
+
+    <!-- Navbar -->
+    @Html.Partial("_Navbar")
+
+    <!-- Scripts -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/chatbox")
+    <script src="~/signalr/hubs"></script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
